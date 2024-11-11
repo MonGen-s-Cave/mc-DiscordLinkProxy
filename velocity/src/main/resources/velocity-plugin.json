@@ -1,0 +1,7 @@
+{
+  "id": "discordlinkproxy",
+  "name": "DiscordLinkProxy",
+  "version": "1.0.0",
+  "main": "hu.kxtsoo.discordlinkproxy.DiscordLinkVelocity",
+  "authors": ["kxtsoo"]
+}

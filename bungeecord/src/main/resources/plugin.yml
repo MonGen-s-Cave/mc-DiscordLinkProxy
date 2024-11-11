@@ -1,0 +1,5 @@
+name: DiscordLinkProxy
+main: hu.kxtsoo.discordlinkproxy.bungeecord.DiscordLinkBungee
+version: 1.0.0
+author: kxtsoo
+description: DiscordLink Bungeecord addon

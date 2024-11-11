@@ -1,0 +1,23 @@
+prefix: "<b><gradient:#6C78F6:#A7AFFF>DISCOR</gradient><gradient:#A7AFFF:#6C78F6>DLINK</gradient></b> <dark_gray>»</dark_gray>"
+
+auth-server:
+  - auth
+
+whitelisted-commands:
+  # Kick player when try to use not whitelisted command
+  player-kick:
+    enabled: true
+    message:
+      - "<b><gradient:#B50404:#FF0000>YOU HAVE BEEN KICKED</gradient></b>"
+      - ""
+      - "<gray>You have been kicked from the server.</gray>"
+      - "<yellow>Reason:</yellow> <white>Use command without 2FA confirm</white>"
+      - ""
+      - "<gold>Feel free to contact with us.</gold>"
+      - "<dark_gray>ᴅɪꜱᴄᴏʀᴅ @ ᴅᴄ.ᴍᴏɴɢᴇɴꜱᴄᴀᴠᴇ.ᴄᴏᴍ</dark_gray>"
+  allowed-commands: # []
+    - 'glist'
+
+
+version: '1'
+

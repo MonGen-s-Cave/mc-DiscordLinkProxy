@@ -1,0 +1,9 @@
+messages:
+  reload-command:
+    no-permission: "%prefix% <red>You do not have permission to reload the configuration."
+    successfully: "%prefix% <green>Configuration reloaded successfully."
+
+  command-use:
+    deny: "%prefix% <red>Command usage restricted. Confirm 2FA first."
+
+version: '1'
