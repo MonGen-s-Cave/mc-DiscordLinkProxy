@@ -49,6 +49,7 @@ public class VelocityCommandListener extends AbstractCommandListener {
                     kickMessage = kickMessage.append(line).append(Component.newline());
                 }
 
+                event.setResult(CommandExecuteEvent.CommandResult.denied());
                 player.disconnect(kickMessage);
             } else {
                 player.sendMessage(MiniMessage.miniMessage().deserialize(configUtil.getMessage("messages.command-use.deny")));
