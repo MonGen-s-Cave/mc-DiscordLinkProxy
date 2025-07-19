@@ -31,11 +31,9 @@ public class VelocityCommandListener extends AbstractCommandListener {
         String command = event.getCommand();
 
         ServerConnection serverConnection = player.getCurrentServer().orElse(null);
-        if (serverConnection == null || !configUtil.isAuthServer(serverConnection.getServerInfo().getName())) {
-            return;
-        }
+        if (serverConnection == null) return;
 
-        if (restrictedPlayers.contains(playerUUID)) {
+        if (configUtil.isAuthServer(serverConnection.getServerInfo().getName()) && restrictedPlayers.contains(playerUUID)) {
             if (configUtil.isWhitelistedCommand(command)) {
                 event.setResult(CommandExecuteEvent.CommandResult.allowed());
                 return;
