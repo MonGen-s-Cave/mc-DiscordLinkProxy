@@ -30,17 +30,19 @@ public class VelocityCommandListener extends AbstractCommandListener {
         UUID playerUUID = player.getUniqueId();
         String command = event.getCommand();
 
-        if (configUtil.isWhitelistedCommand(command)) {
-            event.setResult(CommandExecuteEvent.CommandResult.allowed());
-            return;
-        }
-
         ServerConnection serverConnection = player.getCurrentServer().orElse(null);
         if (serverConnection == null || !configUtil.isAuthServer(serverConnection.getServerInfo().getName())) {
             return;
         }
 
         if (restrictedPlayers.contains(playerUUID)) {
+            if (configUtil.isWhitelistedCommand(command)) {
+                event.setResult(CommandExecuteEvent.CommandResult.allowed());
+                return;
+            }
+
+            event.setResult(CommandExecuteEvent.CommandResult.denied());
+
             if (configUtil.getConfig().getBoolean("whitelisted-commands.player-kick.enabled")) {
                 List<Component> kickMessageComponents = configUtil.getKickMessage();
 
@@ -49,12 +51,8 @@ public class VelocityCommandListener extends AbstractCommandListener {
                     kickMessage = kickMessage.append(line).append(Component.newline());
                 }
 
-                event.setResult(CommandExecuteEvent.CommandResult.denied());
                 player.disconnect(kickMessage);
-            } else {
-                player.sendMessage(MiniMessage.miniMessage().deserialize(configUtil.getMessage("messages.command-use.deny")));
-            }
-            event.setResult(CommandExecuteEvent.CommandResult.denied());
+            } else player.sendMessage(MiniMessage.miniMessage().deserialize(configUtil.getMessage("messages.command-use.deny")));
         }
     }
 }
