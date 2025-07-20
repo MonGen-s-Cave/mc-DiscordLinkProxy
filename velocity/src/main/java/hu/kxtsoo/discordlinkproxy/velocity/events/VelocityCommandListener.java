@@ -33,24 +33,34 @@ public class VelocityCommandListener extends AbstractCommandListener {
         ServerConnection serverConnection = player.getCurrentServer().orElse(null);
         if (serverConnection == null) return;
 
-        if (configUtil.isAuthServer(serverConnection.getServerInfo().getName()) && restrictedPlayers.contains(playerUUID)) {
-            if (configUtil.isWhitelistedCommand(command)) {
-                event.setResult(CommandExecuteEvent.CommandResult.allowed());
-                return;
-            }
-
-            event.setResult(CommandExecuteEvent.CommandResult.denied());
-
-            if (configUtil.getConfig().getBoolean("whitelisted-commands.player-kick.enabled")) {
-                List<Component> kickMessageComponents = configUtil.getKickMessage();
-
-                Component kickMessage = Component.empty();
-                for (Component line : kickMessageComponents) {
-                    kickMessage = kickMessage.append(line).append(Component.newline());
+        if (configUtil.isAuthServer(serverConnection.getServerInfo().getName())) {
+            if (isPlayerRestricted(playerUUID)) {
+                if (configUtil.isWhitelistedCommand(command)) {
+                    event.setResult(CommandExecuteEvent.CommandResult.allowed());
+                    return;
                 }
 
-                player.disconnect(kickMessage);
-            } else player.sendMessage(MiniMessage.miniMessage().deserialize(configUtil.getMessage("messages.command-use.deny")));
+                event.setResult(CommandExecuteEvent.CommandResult.denied());
+
+                if (configUtil.getConfig().getBoolean("whitelisted-commands.player-kick.enabled")) {
+                    List<Component> kickMessageComponents = configUtil.getKickMessage();
+
+                    Component kickMessage = Component.empty();
+                    for (Component line : kickMessageComponents) {
+                        kickMessage = kickMessage.append(line).append(Component.newline());
+                    }
+
+                    player.disconnect(kickMessage);
+                } else {
+                    player.sendMessage(MiniMessage.miniMessage().deserialize(configUtil.getMessage("messages.command-use.deny")));
+                }
+
+            } else {
+                event.setResult(CommandExecuteEvent.CommandResult.allowed());
+            }
+            return;
         }
+
+        event.setResult(CommandExecuteEvent.CommandResult.allowed());
     }
 }

@@ -12,14 +12,4 @@ public abstract class AbstractPluginMessageListener {
         this.restrictedPlayers = restrictedPlayers;
         this.logger = logger;
     }
-
-    protected void handlePluginMessage(UUID playerUUID, boolean require2FA) {
-        if (require2FA) {
-            restrictedPlayers.add(playerUUID);
-            logger.info("2FA required for: " + playerUUID);
-        } else {
-            restrictedPlayers.remove(playerUUID);
-            logger.info("2FA unlocked for: " + playerUUID);
-        }
-    }
 }

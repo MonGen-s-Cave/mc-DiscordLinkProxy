@@ -11,6 +11,7 @@ import hu.kxtsoo.discordlinkproxy.common.util.ConfigUtil;
 import hu.kxtsoo.discordlinkproxy.velocity.commands.ReloadCommand;
 import hu.kxtsoo.discordlinkproxy.velocity.events.VelocityCommandListener;
 import hu.kxtsoo.discordlinkproxy.velocity.events.VelocityPluginMessageListener;
+import hu.kxtsoo.discordlinkproxy.velocity.events.VelocityServerConnectedListener;
 
 import javax.inject.Inject;
 import java.nio.file.Path;
@@ -70,8 +71,11 @@ public class DiscordLinkVelocity implements DiscordLinkInterface {
         configUtil = new ConfigUtil(logger, dataDirectory);
         configUtil.reloadConfig();
         server.getChannelRegistrar().register(IDENTIFIER);
+        System.out.println("Servers: " + server.getAllServers());
+
         server.getEventManager().register(this, new VelocityCommandListener(restrictedPlayers));
         server.getEventManager().register(this, new VelocityPluginMessageListener(restrictedPlayers, logger));
+        server.getEventManager().register(this, new VelocityServerConnectedListener(restrictedPlayers));
 
         server.getCommandManager().register("discordlinkreload", new ReloadCommand());
     }

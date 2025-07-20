@@ -27,6 +27,7 @@ public class VelocityPluginMessageListener extends AbstractPluginMessageListener
         String identifier = event.getIdentifier().getId();
 
         if (!identifier.equals("discordlink:main") && !identifier.equals("discordlink:main (modern)")) {
+            System.out.println("channel not registered");
             return;
         }
 
@@ -43,10 +44,8 @@ public class VelocityPluginMessageListener extends AbstractPluginMessageListener
             if (DiscordLinkVelocity.getInstance().getConfigUtil().isAuthServer(serverName)) {
                 if (require2FA) {
                     restrictedPlayers.add(playerUUID);
-                    logger.info("Requires 2FA confirmation: " + playerUUID);
                 } else {
                     restrictedPlayers.remove(playerUUID);
-                    logger.info("Successful 2FA confirmation: " + playerUUID);
                 }
             }
         } else {
